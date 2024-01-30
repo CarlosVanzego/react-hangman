@@ -23,4 +23,33 @@
 .btn:hover:not(:disabled),
 .btn:focus:not(:disabled) {
   background-color: hsl(200, 100%, 75%);
+}/* Button base styles */
+.btn {
+  width: 100%; /* Full width */
+  border: 3px solid black; /* Border style */
+  background: none; /* Transparent background */
+  aspect-ratio: 1 / 1; /* Aspect ratio for square shape */
+  font-size: 2.5rem; /* Font size */
+  text-transform: uppercase; /* Convert text to uppercase */
+  padding: .5rem; /* Padding */
+  font-weight: bold; /* Bold font */
+  cursor: pointer; /* Cursor style */
+  color: black; /* Text color */
+}
+
+/* Active button styles */
+.btn.active {
+  background-color: hsl(200, 100%, 50%); /* Background color for active state */
+  color: white; /* Text color for active state */
+}
+
+/* Inactive button styles */
+.btn-inactive {
+  opacity: .3; /* Opacity for inactive state */
+}
+
+/* Button hover and focus styles */
+.btn:hover:not(:disabled), /* Hover state */
+.btn:focus:not(:disabled) { /* Focus state */
+  background-color: hsl(200, 100%, 75%); /* Background color */
 }
