@@ -1,68 +1,78 @@
-import { useCallback, useEffect, useState } from "react"
-import { HangmanDrawing } from "./HangmanDrawing"
-import { HangmanWord } from "./HangmanWord"
-import { Keyboard } from "./Keyboard"
-import words from "./wordList.json"
+import { useCallback, useEffect, useState } from "react"; // Importing necessary hooks from React
+import { HangmanDrawing } from "./HangmanDrawing"; // Importing HangmanDrawing component
+import { HangmanWord } from "./HangmanWord"; // Importing HangmanWord component
+import { Keyboard } from "./Keyboard"; // Importing Keyboard component
+import words from "./wordList.json"; // Importing list of words for the game
 
+// Function to randomly select a word from the word list
 function getWord() {
-  return words[Math.floor(Math.random() * words.length)]
+  return words[Math.floor(Math.random() * words.length)];
 }
 
+// Main App component
 function App() {
-  const [wordToGuess, setWordToGuess] = useState(getWord)
-  const [guessedLetters, setGuessedLetters] = useState<string[]>([])
+  const [wordToGuess, setWordToGuess] = useState(getWord); // State for the word to guess
+  const [guessedLetters, setGuessedLetters] = useState<string[]>([]); // State for guessed letters
 
+  // Filter incorrect guessed letters
   const incorrectLetters = guessedLetters.filter(
     letter => !wordToGuess.includes(letter)
-  )
+  );
 
-  const isLoser = incorrectLetters.length >= 6
+  // Check if the player has lost
+  const isLoser = incorrectLetters.length >= 6;
+
+  // Check if the player has won
   const isWinner = wordToGuess
     .split("")
-    .every(letter => guessedLetters.includes(letter))
+    .every(letter => guessedLetters.includes(letter));
 
+  // Function to add a guessed letter
   const addGuessedLetter = useCallback(
     (letter: string) => {
-      if (guessedLetters.includes(letter) || isLoser || isWinner) return
+      if (guessedLetters.includes(letter) || isLoser || isWinner) return;
 
-      setGuessedLetters(currentLetters => [...currentLetters, letter])
+      setGuessedLetters(currentLetters => [...currentLetters, letter]);
     },
     [guessedLetters, isWinner, isLoser]
-  )
+  );
 
+  // Effect to handle keypress events for guessing letters
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
-      const key = e.key
-      if (!key.match(/^[a-z]$/)) return
+      const key = e.key;
+      if (!key.match(/^[a-z]$/)) return;
 
-      e.preventDefault()
-      addGuessedLetter(key)
-    }
+      e.preventDefault();
+      addGuessedLetter(key);
+    };
 
-    document.addEventListener("keypress", handler)
+    document.addEventListener("keypress", handler);
 
     return () => {
-      document.removeEventListener("keypress", handler)
-    }
-  }, [guessedLetters])
+      document.removeEventListener("keypress", handler);
+    };
+  }, [guessedLetters]);
 
+  // Effect to handle keypress events for starting a new game
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
-      const key = e.key
-      if (key !== "Enter") return
+      const key = e.key;
+      if (key !== "Enter") return;
 
-      e.preventDefault()
-      setGuessedLetters([])
-      setWordToGuess(getWord())
-    }
+      e.preventDefault();
+      setGuessedLetters([]);
+      setWordToGuess(getWord());
+    };
 
-    document.addEventListener("keypress", handler)
+    document.addEventListener("keypress", handler);
 
     return () => {
-      document.removeEventListener("keypress", handler)
-    }
-  }, [])
+      document.removeEventListener("keypress", handler);
+    };
+  }, []);
 
+  // Rendering the game components
   return (
     <div
       style={{
@@ -95,7 +105,7 @@ function App() {
         />
       </div>
     </div>
-  )
+  );
 }
 
-export default App
+export default App; // Exporting the App component as default
