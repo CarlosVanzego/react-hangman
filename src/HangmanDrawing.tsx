@@ -1,3 +1,4 @@
+// Constants representing different body parts of the hangman
 const HEAD = (
   <div
     style={{
@@ -85,16 +86,21 @@ const LEFT_LEG = (
   />
 )
 
+// Array containing all body parts of the hangman
 const BODY_PARTS = [HEAD, BODY, RIGHT_ARM, LEFT_ARM, RIGHT_LEG, LEFT_LEG]
 
+// Component for rendering the hangman drawing
 type HangmanDrawingProps = {
-  numberOfGuesses: number
+  numberOfGuesses: number // Number of incorrect guesses
 }
 
 export function HangmanDrawing({ numberOfGuesses }: HangmanDrawingProps) {
   return (
     <div style={{ position: "relative" }}>
+      {/* Render the body parts based on the number of incorrect guesses */}
       {BODY_PARTS.slice(0, numberOfGuesses)}
+
+      {/* Static parts of the hangman body */}
       <div
         style={{
           height: "50px",
